@@ -1,0 +1,54 @@
+@host = http://localhost:10000
+
+###Error
+GET  {{host}}
+ndk-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6ImR1eWt5LWFwaSJ9.eyJqdGkiOiJuZ3V5ZW5kdXlreS0xNzEzNDkwOTEzIiwidXNlcklkIjoiNjYyMTUwYzlmYjZiN2UzNDU4M2EwNDA3IiwiZXhwIjoxNzEzNDk0NTEzLCJpc3MiOiJuZ3V5ZW5kdXlreSJ9.gXS1PffSab3weFGW_825wpx9-zLEgVr5icNWgX079yo
+
+###Register
+POST  {{host}}/user/register
+Content-Type: application/json
+
+{
+    "email": "myhoa1010@gmail.com",
+    "name": "NDK 2",
+    "password": "12345678"
+}
+
+###Login
+POST  {{host}}/user/login
+Content-Type: application/json
+
+{
+    "email": "myhoa1010@gmail.com",
+    "password": "12345678"
+}
+
+###Refresh token
+POST  {{host}}/user/refresh-token
+Content-Type: application/json
+
+{
+    "refreshToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6ImR1eWt5LWFwaSJ9.eyJqdGkiOiJuZ3V5ZW5kdXlreS0xNzEzNDkzOTM2IiwidXNlcklkIjoiNjYyMTUwYzlmYjZiN2UzNDU4M2EwNDA3IiwiZXhwIjoxNzQ1MDUxNTM2LCJpc3MiOiJuZ3V5ZW5kdXlreSJ9.a0OWEhd7rRAoEl9P6cpHe0htzzX3SNCQ8NTwjrg3E1k"
+}
+
+###Logout
+DELETE  {{host}}/user/logout
+Content-Type: application/json
+
+{
+    "refreshToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6ImR1eWt5LWFwaSJ9.eyJqdGkiOiJuZ3V5ZW5kdXlreS0xNzEzNDkzOTQ2IiwidXNlcklkIjoiNjYyMTUwYzlmYjZiN2UzNDU4M2EwNDA3IiwiZXhwIjoxNzQ1MDUxNTQ2LCJpc3MiOiJuZ3V5ZW5kdXlreSJ9.olBJwxlXtF7Qk-stjTT88bbacw1rVicpmG0IkjFXOZw"
+}
+
+###Create contact
+POST {{host}}/contact/create
+Content-Type: application/json
+ndk-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6ImR1eWt5LWFwaSJ9.eyJqdGkiOiJuZ3V5ZW5kdXlreS0xNzEzNTQzNDM3IiwidXNlcklkIjoiNjYyMTUwYzlmYjZiN2UzNDU4M2EwNDA3IiwiZXhwIjoxNzEzNTQ3MDM3LCJpc3MiOiJuZ3V5ZW5kdXlreSJ9.PAiiCLYGD5EIpD4n59pE_QQdPwu8InBG4WykoeURqH4
+
+{
+    "name":"Huỳnh Mỹ Hoa",
+    "phone_number": "0376539271",
+    "email": "myhoa1010@gmail.com",
+    "sex":"FEMALE",
+    "company":"Organon",
+    "vip": true
+}
