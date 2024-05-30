@@ -47,10 +47,20 @@ const recoverPasswordSchema = joi.object({
     })
 });
 
+const updateUserSchema = joi.object({
+    email: joi.string().email().lowercase().required(),
+    name: joi.string().min(1).max(30).required(),
+    phone_number: joi.string().regex(/^(84|0)\d{9,10}$/).messages({
+        "string.pattern.base": "Invalid phone number"
+    }).required(),
+    stringee_userid: joi.string().max(35).allow(null, "")
+});
+
 module.exports = {
     registerUserSchema,
     loginUserSchema,
     createContactSchema,
     updateContactSchema,
-    recoverPasswordSchema
+    recoverPasswordSchema,
+    updateUserSchema
 }

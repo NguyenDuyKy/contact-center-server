@@ -1,6 +1,6 @@
 const handleError = require("http-errors");
 const user = require("../../models/user/user_model");
-const { registerUserSchema, loginUserSchema, recoverPasswordSchema } = require("../../common/helpers/validation_schema");
+const { registerUserSchema, loginUserSchema, recoverPasswordSchema, updateUserSchema } = require("../../common/helpers/validation_schema");
 const jwtHelper = require("../../common/helpers/jwt");
 const { ERROR_DESC } = require("../../common/constants");
 const client = require("../../common/config/init_redis");
@@ -39,6 +39,7 @@ const userController = {
             const refreshToken = await jwtHelper.signRefreshToken(loginUser.id);
             return res.send({
                 login: "Success", user: {
+                    id: loginUser.id,
                     name: loginUser.name,
                     email: loginUser.email,
                     stringee_userid: loginUser.stringee_userid,
@@ -110,6 +111,33 @@ const userController = {
                 await client.del(userRespone.phone_number);
                 res.send({ recoverPassword: "Success" });
             }
+        } catch (err) {
+            next(err);
+        }
+    },
+    updateInfo: async (req, res, next) => {
+        try {
+            const userId = req.params.id;
+            if (!userId) throw handleError.BadRequest();
+            const isUserExist = await user.findById(userId);
+            if (!isUserExist) throw handleError.NotFound(ERROR_DESC.NOT_REGISTER);
+            const validated = await updateUserSchema.validateAsync(req.body);
+            validated.phone_number = await validated.phone_number.replace(/^0/, "84");
+            const isEmailExist = await user.findOne({ email: validated.email });
+            if (isEmailExist && isEmailExist.email !== isUserExist.email) throw handleError.Conflict(`${validated.email} ${ERROR_DESC.IS_ALREADY_REGISTED}`);
+            const isPhoneExist = await user.findOne({ phone_number: validated.phone_number });
+            if (isPhoneExist && isPhoneExist.phone_number !== isUserExist.phone_number) throw handleError.Conflict(`${validated.phone_number} ${ERROR_DESC.IS_ALREADY_REGISTED}`);
+            const updateUserResponse = await user.findByIdAndUpdate(userId, validated, { new: true })
+            res.send({
+                updateUserInfo: "Success",
+                user: {
+                    id: updateUserResponse.id,
+                    name: updateUserResponse.name,
+                    email: updateUserResponse.email,
+                    phone_number: updateUserResponse.phone_number,
+                    stringee_userid: updateUserResponse.stringee_userid,
+                }
+            });
         } catch (err) {
             next(err);
         }
