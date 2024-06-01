@@ -9,5 +9,6 @@ router.post("/agent/update/:id", jwtHelper.verifyAccessToken, agentController.up
 router.get("/agent/pcc-client-token/:id", jwtHelper.verifyAccessToken, agentController.getPccClientToken);
 router.get("/number", jwtHelper.verifyAccessToken, numberController.getList);
 router.post("/get-list", urlController.getList);
+router.get("/answer-url", urlController.answerUrl);
 
 module.exports = router;

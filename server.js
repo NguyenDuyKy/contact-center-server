@@ -25,6 +25,10 @@ app.use("/api", homeRouter);
 app.use("/api/user", userRouter);
 app.use("/api/contact", contactRouter);
 app.use("/api/stringee", stringeeRouter);
+app.use("/render-health-check", (req, res, next) => {
+    res.status(200)
+    res.send({ msg: "OK" });
+});
 app.use((req, res, next) => {
     next(handleError.NotFound(`Controller ${req.originalUrl} not found`));
 });
@@ -35,7 +39,7 @@ app.use((err, req, res, next) => {
             status: err.status || 500,
             message: err.message
         }
-    })
+    });
 });
 
 const PORT = process.env.PORT || 5000;
