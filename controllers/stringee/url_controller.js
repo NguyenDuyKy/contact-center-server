@@ -16,7 +16,7 @@ const connectAction = {
         "alias": ""
     },
     "customData": "{\n  name: \"NDK\",\n  content: \"custom data from backend\"\n}", //Custom data (String) is sent to the client's app when the client makes a call or receives an incoming call.
-    "timeout": parseInt(process.env.STRINGEE_CALL_TIMEOUT), //If the call is unanswered, set the number in seconds before Stringee stops ringing.
+    "timeout": null, //If the call is unanswered, set the number in seconds before Stringee stops ringing.
     "continueOnFail": false,  //If true, Stringee sends a POST request to the onFailEventUrl.
     "onFailEventUrl": "",
     "maxConnectTime": -1, //Maximum length of the call in seconds.
@@ -77,6 +77,7 @@ const urlController = {
                         connect.to.number = query.to;
                         connect.to.alias = query.to;
                     }
+                    connect.timeout = parseInt(process.env.STRINGEE_OUTBOUND_TIMEOUT);
                     break;
                 case "false":
                     const agentList = process.env.AGENT_LIST.split(",");
@@ -87,6 +88,7 @@ const urlController = {
                     connect.from.alias = query.from;
                     connect.to.number = agentList[0];
                     connect.to.alias = agentList[0];
+                    connect.timeout = parseInt(process.env.STRINGEE_INBOUND_TIMEOUT);
                     break;
                 default:
                     break;
