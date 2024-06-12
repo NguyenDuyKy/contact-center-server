@@ -20,3 +20,4 @@ pnpm-debug.log*
 *.sw?
 package-lock.json
 dist
+stringee_key.text

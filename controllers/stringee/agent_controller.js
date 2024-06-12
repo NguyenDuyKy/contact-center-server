@@ -30,6 +30,14 @@ const agentController = {
             next(err);
         }
     },
+    getRestToken: async (req, res, next) => {
+        try {
+            const tokenResponse = generateStringeeToken.restToken();
+            return res.send(tokenResponse);
+        } catch (err) {
+            next(err);
+        }
+    }
 };
 
 async function getAgentData(userId) {

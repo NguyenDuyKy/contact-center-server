@@ -25,6 +25,18 @@ const connectAction = {
 const phoneRegex = /^(0|84)(3[2-9]|5[2689]|7[06789]|8[1-9]|9[0-46-9])[0-9]{7}$|^(0|84)(2[0-9]{1,3})[0-9]{5,8}$/;
 
 const urlController = {
+    getCustomerInfo: async (req, res, next) => {
+        try {
+            const query = { ...req.query };
+            const resObj = {
+                query: query,
+                message: "This is data from get customer info URL"
+            };
+            return res.send(resObj);
+        } catch (err) {
+            next(err);
+        }
+    },
     getList: async (req, res, next) => {
         try {
             let callId = req.body.calls[0].callId;
