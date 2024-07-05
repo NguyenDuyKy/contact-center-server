@@ -46,9 +46,9 @@ const urlController = {
                     callId: callId,
                     agents: [
                         {
-                            stringee_user_id: "AC9Z3A5J97",
+                            stringee_user_id: "102",
                             routing_type: 1,
-                            answer_timeout: 20
+                            answer_timeout: 3
                         }
                     ]
                 }]
@@ -67,6 +67,7 @@ const urlController = {
                 case "true":
                     if (query.videocall === "true") {
                         record.format = "webm";
+                        record.record_type = 2;
                         connect.from.type = "internal";
                         connect.to.type = "internal";
                         connect.from.number = query.userId;
@@ -75,6 +76,7 @@ const urlController = {
                         connect.to.alias = query.to;
                     } else {
                         record.format = "mp3";
+                        record.recordStereo = true;
                         if (phoneRegex.test(query.from)) {
                             connect.from.type = "internal";
                             connect.to.type = "external";
